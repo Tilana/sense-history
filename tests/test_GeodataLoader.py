@@ -1,12 +1,12 @@
 import unittest
-from utils import load_polygon
+from sense_history.GeodataLoader import GeodataLoader 
 from shapely.geometry import Point
 
-class TestUtils(unittest.TestCase):
+class TestGeodataLoader(unittest.TestCase):
 
     def setUp(self):
         path = './module/berlin-wall/polygon.geojson'
-        self.berlin_wall = load_polygon(path)
+        self.berlin_wall = GeodataLoader().load_polygon(path)
 
     def test_contains(self):
         fernsehturm = Point(13.409779, 52.520645)

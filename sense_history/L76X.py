@@ -2,6 +2,7 @@ import RPi.GPIO as GPIO
 import config
 import math
 import time
+import pdb
 
 Temp = '0123456789ABCDEF*'
 BUFFSIZE = 1100
@@ -91,12 +92,31 @@ class L76X(object):
         self.config.Uart_SendString(data)
         self.config.Uart_SendByte('\r')
         self.config.Uart_SendByte('\n')
-        print data
+        #print data
+
+    def DDM_to_DD(self, position, indicator):
+        minutes = float(position[-7:]) / 60.0
+        degrees = float(position[:-7])
+        decimal_degree = degrees + minutes
+        if indicator == 'S' or indicator == 'W':
+            decimal_degree = decimal_degree * -1
+        return round(decimal_degree, 6)
+
+    def set_dd_location(self, data):
+        sentences = data.split('\r\n')
+        GNGGA = [sentence for sentence in sentences if sentence.find('$GNGGA') > -1 and len(sentence.split(','))>=6][-1]
+        codes = GNGGA.split(',')
+        latitude = codes[2]
+        latitude_indicator = codes[3]
+        longitude = codes[4]
+        longitude_indicator = codes[5] 
+        self.lat_DD = self.DDM_to_DD(latitude, latitude_indicator)
+        self.lon_DD = self.DDM_to_DD(longitude, longitude_indicator)
         
     def L76X_Gat_GNRMC(self):
         data = self.config.Uart_ReceiveString(BUFFSIZE)
-        print data
-        print '\n'
+        #print data
+        #print '\n'
         add=0
         self.Status = 0
         for i in range(0, BUFFSIZE-71):
@@ -128,6 +148,10 @@ class L76X(object):
                             elif(x == 2):
                                 if(ord(data[add+z+1]) == 65):#A
                                     self.Status = 1
+                                    try:
+                                        self.set_dd_location(data)
+                                    except:
+                                        print('NO DD position can be computed')
                                 else:
                                     self.Status = 0
                             elif(x == 3):

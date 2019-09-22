@@ -10,16 +10,17 @@ class GPS:
         self.gps.L76X_Send_Command(self.gps.SET_POS_FIX_400MS)
         self.gps.L76X_Exit_BackupMode()
 
-    def get_position(self):
+    def get_position(self, logs=True):
         self.gps.L76X_Gat_GNRMC()
-        self.print_position()
-        return (self.gps.Lon, self.gps.Lat)
+        if logs:
+            self.print_position()
+        return (self.gps.lon_DD, self.gps.lat_DD)
 
     def print_position(self):
         logging.info('Time {}:{}:{}'.format(self.gps.Time_H, self.gps.Time_M, self.gps.Time_S))
-        logging.info('Longitude = {}  Latitude = {}'.format(self.gps.Lon, self.gps.Lat))
+        logging.info('Longitude = {}  Latitude = {}'.format(self.gps.lon_DD, self.gps.lat_DD))
 
     def stop(self):
-        GPIO.cleanup()
+        #GPIO.cleanup()
         logging.info('GPS stopped')
 
