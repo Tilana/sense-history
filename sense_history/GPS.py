@@ -25,3 +25,6 @@ class GPS:
         #GPIO.cleanup()
         logging.info('GPS stopped')
 
+    def islocated(self):
+        return self.gps.Status
+
