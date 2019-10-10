@@ -15,10 +15,12 @@ vibrator = Vibrator()
 gps = GPS()
 vibrator.stop()
 
-PATH = './module/berlin-wall/polygon.geojson'
-west_sector = GeodataLoader().load_polygon(PATH)
+MODULE = 'BERLIN_WALL'
+
+west_sector = GeodataLoader(MODULE).data
 
 was_in_west = False
+was_located = 0
 
 logging.info('START POSITIONING')
 i = 0
@@ -27,6 +29,11 @@ while True:
     logging.info('Location step: {}'.format(i))
     longitude, latitude = gps.get_position()
     current_position = Point(longitude, latitude)
+
+    if gps.islocated() - was_located == 1:
+        vibrator.run()
+        was_located = 1
+
     is_in_west = west_sector.contains(current_position)
     logging.info('in west: {}'.format(is_in_west))
 
