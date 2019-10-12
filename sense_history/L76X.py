@@ -3,6 +3,7 @@ import config
 import math
 import time
 import pdb
+import logging
 
 Temp = '0123456789ABCDEF*'
 BUFFSIZE = 1100
@@ -27,6 +28,8 @@ class L76X(object):
     Lat_Baidu = 0.0
     Lon_Goodle = 0.0
     Lat_Goodle = 0.0
+    lon_DD = 0.0
+    lat_DD = 0.0
     
     GPS_Lon = 0
     GPS_Lat = 0
@@ -115,8 +118,8 @@ class L76X(object):
         
     def L76X_Gat_GNRMC(self):
         data = self.config.Uart_ReceiveString(BUFFSIZE)
-        #print data
-        #print '\n'
+        print data
+        print '\n'
         add=0
         self.Status = 0
         for i in range(0, BUFFSIZE-71):

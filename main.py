@@ -9,6 +9,7 @@ import time
 FORMAT = '%(asctime)-15s: %(message)s'
 log_file = './logs/sense_history.log'
 logging.basicConfig(format=FORMAT, level=logging.INFO, filename=log_file, filemode='a')
+#logging.basicConfig(format=FORMAT, level=logging.INFO) 
 
 vibrator = Vibrator()
 gps = GPS()
