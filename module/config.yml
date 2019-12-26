@@ -4,7 +4,9 @@ ZURICH_TREES:
         latitude: ['geometry', 'coordinates', 1]
         longitude: ['geometry', 'coordinates', 0]
         features:
-                - year: ['properties', 'pflanzjahr']
+                year: ['properties', 'pflanzjahr']
+        filter:
+                year: 1970
 
 BERLIN_WALL:
         path: './module/berlin/berlin_wall.geojson'
@@ -15,5 +17,5 @@ BERLIN_HISTORIC:
         latitude: ['geometry', 'coordinates', 1]
         longitude: ['geometry', 'coordinates', 0]
         features:
-                - name: ['properties', 'name']
+                name: ['properties', 'name']
 
