@@ -1,15 +1,20 @@
-import json
+#import json
 from sense_history import GeodataLoader
 from sense_history import Vibrator, GPS
-import pandas as pd
+#import pandas as pd
 import logging
 import pdb
 import math
 
-PATH = './module/zurich-baeume/baumkataster.json'
+MODULE = 'ZURICH_TREES'
+#PATH = './module/zurich-baeume/baumkataster.json'
 
-with open(PATH) as f:
-    data = json.load(f)
+data = GeodataLoader(MODULE).load_module()
+
+pdb.set_trace()
+
+#with open(PATH) as f:
+#    data = json.load(f)
 
 
 def extract_info(record):
@@ -23,14 +28,15 @@ def extract_info(record):
 
 
 all_trees = [extract_info(record) for record in data['features']]
-all_trees = pd.DataFrame(all_trees)
-all_trees['year'] = pd.to_numeric(all_trees['year'], errors='coerce')
+#all_trees = pd.DataFrame(all_trees)
+#all_trees['year'] = pd.to_numeric(all_trees['year'], errors='coerce')
 
-old_trees = all_trees[all_trees.year <= 1969]
+#old_trees = all_trees[all_trees.year <= 1969]
 
 FORMAT = '%(asctime)-15s: %(message)s'
 log_file = './logs/sense_history_trees.log'
-logging.basicConfig(format=FORMAT, level=logging.INFO, filename=log_file, filemode='a')
+#logging.basicConfig(format=FORMAT, level=logging.INFO, filename=log_file, filemode='a')
+logging.basicConfig(format=FORMAT, level=logging.INFO)
 
 vibrator = Vibrator()
 gps = GPS()
