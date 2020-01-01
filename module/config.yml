@@ -19,3 +19,5 @@ BERLIN_HISTORIC:
         features:
                 name: ['properties', 'name']
 
+TEST:
+        path: './tests/test_modules/poi.geojson'

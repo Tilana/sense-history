@@ -8,7 +8,7 @@ import yaml
 class GeodataLoader(object):
 
     MODULES_CONFIG = './module/config.yml'
-    MODULES = ['BERLIN_WALL', 'BERLIN_HISTORIC', 'ZURICH_TREES']
+    MODULES = ['BERLIN_WALL', 'BERLIN_HISTORIC', 'ZURICH_TREES', 'TEST']
 
     def __init__(self, MODULE_NAME):
         assert MODULE_NAME in self.MODULES
@@ -18,7 +18,6 @@ class GeodataLoader(object):
         if 'filter' in self.cfg.keys():
             key, value = self.cfg['filter'].items()[0]
             self.filter(key, value)
-        
 
     def load_module(self, MODULE):
         if MODULE == 'BERLIN_WALL':
