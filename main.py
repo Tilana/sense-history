@@ -1,7 +1,8 @@
 #!/usr/bin/python
 # -*- coding:utf-8 -*-
-from sense_history import GeodataLoader
-from sense_history import Vibrator, GPS
+from sense_history.GeodataLoader import GeodataLoader
+from sense_history.Vibrator import Vibrator
+from sense_history.GPS import GPS
 from shapely.geometry import Point
 import logging
 import time

@@ -1,6 +1,6 @@
 from shapely.geometry import shape, Point
 from functools import reduce
-from POI import POI
+from sense_history.POI import POI
 import operator
 import json
 import yaml
