@@ -1,5 +1,5 @@
 import RPi.GPIO as GPIO
-import config
+from . import config
 import math
 import time
 import pdb
@@ -86,16 +86,16 @@ class L76X(object):
         self.config = config.config(9600)
     
     def L76X_Send_Command(self, data):
-        Check = ord(data[1]) 
+        Check = ord(data[1])
         for i in range(2, len(data)):
-            Check = Check ^ ord(data[i]) 
+            Check = Check ^ ord(data[i])
         data = data + Temp[16]
-        data = data + Temp[(Check/16)]
-        data = data + Temp[(Check%16)]
+        data = data + Temp[int((Check/16))]
+        data = data + Temp[int((Check%16))]
         self.config.Uart_SendString(data)
         self.config.Uart_SendByte('\r')
         self.config.Uart_SendByte('\n')
-        #print data
+        #print(data)
 
     def DDM_to_DD(self, position, indicator):
         minutes = float(position[-7:]) / 60.0
@@ -118,38 +118,38 @@ class L76X(object):
         
     def L76X_Gat_GNRMC(self):
         data = self.config.Uart_ReceiveString(BUFFSIZE)
-        print data
-        print '\n'
+        print(data)
+        print('\n')
         add=0
         self.Status = 0
         for i in range(0, BUFFSIZE-71):
-            if(ord(data[add]) == 36 and ord(data[add+1]) == 71 and (ord(data[add+2]) == 78 \
-            or ord(data[add+2]) == 80) and ord(data[add+3]) == 82 and ord(data[add+4]) == 77\
-            and ord(data[add+5]) == 67):
+            if(data[add] == 36 and data[add+1] == 71 and (data[add+2] == 78 \
+            or data[add+2] == 80) and data[add+3] == 82 and data[add+4] == 77\
+            and data[add+5] == 67):
                     x = 0
                     z = 0
                     while(x < 12):
                         if(add+z >= BUFFSIZE-1):
                             return
-                        if(ord(data[add+z]) == 44):#,
+                        if(data[add+z] == 44):#,
                             x = x + 1
                             if(x == 1):
                                 Time = 0
                                 for k in range(0, BUFFSIZE-1):
                                     if(add+z+k >= BUFFSIZE-1):
                                         return
-                                    if(ord(data[add+z+k+1]) == 44):#,
+                                    if(data[add+z+k+1] == 44):#,
                                         break
-                                    if(ord(data[add+z+k+1]) == 46):#.
+                                    if(data[add+z+k+1] == 46):#.
                                         break
-                                    Time = (ord(data[add+z+k+1]) - 48) + Time*10
+                                    Time = (data[add+z+k+1] - 48) + Time*10
                                 self.Time_H = Time/10000 + 8
                                 self.Time_M = Time/100%100
                                 self.Time_S = Time%100
                                 if(self.Time_H >= 24):
                                      self.Time_H =  self.Time_H - 24
                             elif(x == 2):
-                                if(ord(data[add+z+1]) == 65):#A
+                                if(data[add+z+1] == 65):#A
                                     self.Status = 1
                                     try:
                                         self.set_dd_location(data)
@@ -162,11 +162,11 @@ class L76X(object):
                                 for k in range(0, BUFFSIZE-1):
                                     if(add+z+k >= BUFFSIZE-1):
                                         return
-                                    if(ord(data[add+z+k+1]) == 44):#,
+                                    if(data[add+z+k+1] == 44):#,
                                         break
-                                    if(ord(data[add+z+k+1]) == 46):#.
+                                    if(data[add+z+k+1] == 46):#.
                                         continue
-                                    latitude = (ord(data[add+z+k+1]) - 48) + latitude*10
+                                    latitude = (data[add+z+k+1] - 48) + latitude*10
                                 self.Lat = latitude / 1000000.0
                             elif(x == 4):
                                 self.Lat_area = data[add+z+1]
@@ -175,11 +175,11 @@ class L76X(object):
                                 for k in range(0, BUFFSIZE-1):
                                     if(add+z+k >= BUFFSIZE-1):
                                         return
-                                    if(ord(data[add+z+k+1]) == 44):#,
+                                    if(data[add+z+k+1] == 44):#,
                                         break
-                                    if(ord(data[add+z+k+1]) == 46):#.
+                                    if(data[add+z+k+1] == 46):#.
                                         continue
-                                    longitude = (ord(data[add+z+k+1]) - 48) + longitude*10
+                                    longitude = (data[add+z+k+1] - 48) + longitude*10
                                 
                                 self.Lon = longitude / 1000000.0
                             elif(x == 6):
