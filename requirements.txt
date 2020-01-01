@@ -2,3 +2,5 @@ geojson
 nose
 shapely
 pyyaml
+RPi.GPIO
+pyserial
