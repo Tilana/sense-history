@@ -4,10 +4,7 @@ from sense_history.POI import POI
 import operator
 import json
 import yaml
-<<<<<<< Updated upstream
-=======
 import pdb
->>>>>>> Stashed changes
 
 class GeodataLoader(object):
 
