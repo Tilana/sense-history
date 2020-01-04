@@ -1,11 +1,12 @@
-from sense_history import GeodataLoader
-from sense_history import Vibrator, GPS
+from sense_history.GeodataLoader import GeodataLoader
+from sense_history.Vibrator import Vibrator
+from sense_history.GPS import GPS
 from shapely.geometry import Point
 import logging
 import time
 
 MODULE = 'BERLIN_HISTORIC'
-MODULE = 'ZURICH_TREES'
+#MODULE = 'ZURICH_TREES'
 RADIUS = 10 
 
 data = GeodataLoader(MODULE)
