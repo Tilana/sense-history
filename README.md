@@ -1,5 +1,13 @@
 ## sense-history
 
+### Run
+
+Run Module:
+``` ./run start ```
+
+Run lint and tests:
+``` ./run test ```
+
 ### Installation
 
 To get *shapely* running install libgeos with:

@@ -1,0 +1,16 @@
+#!/bin/bash
+
+CMD=$1
+
+if [ $CMD = "lint" ]; then
+    mypy *.py sense_history/*.py --ignore-missing-imports
+
+elif [ $CMD = "test" ]; then
+    nosetests tests/
+    ./run lint
+
+elif [ $CMD = "start" ]; then
+    sudo python3 main.py "$@"
+else
+    "$CMD" "$@"
+fi
