@@ -4,6 +4,10 @@ from sense_history.POI import POI
 import operator
 import json
 import yaml
+<<<<<<< Updated upstream
+=======
+import pdb
+>>>>>>> Stashed changes
 
 class GeodataLoader(object):
 
@@ -60,5 +64,4 @@ class GeodataLoader(object):
     def filter(self, key, value):
         # TODO: Make this function more applicable to other use cases, e.g. filter by strings, etc.
         self.POIs = [POI for POI in self.POIs if (getattr(POI, key) != None) and (int(getattr(POI, key)) <= value)]
-
 

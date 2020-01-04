@@ -4,6 +4,7 @@ from sense_history.GeodataLoader import GeodataLoader
 from sense_history.Vibrator import Vibrator
 from sense_history.GPS import GPS
 from shapely.geometry import Point
+import pdb
 import logging
 import time
 
@@ -30,6 +31,10 @@ while True:
     logging.info('Location step: {}'.format(i))
     longitude, latitude = gps.get_position()
     current_position = Point(longitude, latitude)
+
+    if i == 10:
+        print('yeah')
+        #pdb.set_trace()
 
     if gps.islocated() - was_located == 1:
         vibrator.run()
