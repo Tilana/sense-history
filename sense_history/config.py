@@ -1,15 +1,13 @@
-#!/usr/bin/python
-# -*- coding:utf-8 -*-
-import serial
 import RPi.GPIO as GPIO
+import serial
 
 Temp = '0123456789ABCDEF*'
-
 
 
 class config(object):
     FORCE  = 17
     STANDBY= 4
+    
     def __init__(ser, Baudrate = 9600):
         ser.serial = serial.Serial("/dev/ttyAMA0",Baudrate)
         GPIO.setmode(GPIO.BCM)
@@ -20,10 +18,10 @@ class config(object):
         GPIO.output(ser.STANDBY, GPIO.HIGH)
         
     def Uart_SendByte(ser, value): 
-        ser.serial.write(value) 
+        ser.serial.write(value.encode()) 
         
     def Uart_SendString(ser, value): 
-        ser.serial.write(value)
+        ser.serial.write(value.encode())
   
 
     def Uart_ReceiveByte(ser): 

@@ -1,8 +1,8 @@
-#!/usr/bin/python
-# -*- coding:utf-8 -*-
-from sense_history import GeodataLoader
-from sense_history import Vibrator, GPS
+from sense_history.GeodataLoader import GeodataLoader
+from sense_history.Vibrator import Vibrator
+from sense_history.GPS import GPS
 from shapely.geometry import Point
+import pdb
 import logging
 import time
 
@@ -11,16 +11,16 @@ log_file = './logs/sense_history.log'
 logging.basicConfig(format=FORMAT, level=logging.INFO, filename=log_file, filemode='a')
 #logging.basicConfig(format=FORMAT, level=logging.INFO) 
 
-vibrator = Vibrator()
-gps = GPS()
+vibrator: Vibrator = Vibrator()
+gps: GPS = GPS()
 vibrator.stop()
 
 MODULE = 'BERLIN_WALL'
 
 west_sector = GeodataLoader(MODULE).data
 
-was_in_west = False
-was_located = 0
+was_in_west: bool = False
+was_located: bool = False
 
 logging.info('START POSITIONING')
 i = 0
@@ -30,11 +30,11 @@ while True:
     longitude, latitude = gps.get_position()
     current_position = Point(longitude, latitude)
 
-    if gps.islocated() - was_located == 1:
+    if not was_located and gps.islocated():
         vibrator.run()
-        was_located = 1
+        was_located = True 
 
-    is_in_west = west_sector.contains(current_position)
+    is_in_west: bool = west_sector.contains(current_position)
     logging.info('in west: {}'.format(is_in_west))
 
     if is_in_west != was_in_west:

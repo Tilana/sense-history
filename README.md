@@ -49,6 +49,14 @@ sense-history is a raspberry project.
 
 
 
+### Run
+
+Run Module:
+``` ./run start ```
+
+Run lint and tests:
+``` ./run test ```
+
 
 ### Installation
 
