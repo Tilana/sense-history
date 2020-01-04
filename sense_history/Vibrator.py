@@ -4,7 +4,7 @@ import time
 
 class Vibrator:
 
-    def __init__(self, pin=4, warnings=False, log=True):
+    def __init__(self, pin: int=4, warnings: bool=False, log: bool=True) -> None:
         self.pin = pin
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(warnings)
@@ -12,10 +12,10 @@ class Vibrator:
         if log:
             logging.info('vibration setup')
 
-    def stop(self):
+    def stop(self) -> None:
         GPIO.output(self.pin, GPIO.LOW)
 
-    def run(self, duration=0.4, log=True):
+    def run(self, duration: float=0.4, log: bool=True) -> None:
         GPIO.output(self.pin, GPIO.HIGH)
         time.sleep(duration)
         GPIO.output(self.pin, GPIO.LOW)

@@ -1,5 +1,5 @@
 import RPi.GPIO as GPIO
-from . import config
+from sense_history import config
 import math
 import time
 import pdb
