@@ -1,15 +1,13 @@
-#!/usr/bin/python
-# -*- coding:utf-8 -*-
-import serial
 import RPi.GPIO as GPIO
+import serial
 
 Temp = '0123456789ABCDEF*'
-
 
 
 class config(object):
     FORCE  = 17
     STANDBY= 4
+    
     def __init__(ser, Baudrate = 9600):
         ser.serial = serial.Serial("/dev/ttyAMA0",Baudrate)
         GPIO.setmode(GPIO.BCM)
