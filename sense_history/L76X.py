@@ -106,7 +106,7 @@ class L76X(object):
         return round(decimal_degree, 6)
 
     def set_dd_location(self, data):
-        sentences = data.split('\r\n')
+        sentences = data.decode('ISO-8859-1').split('\r\n')
         GNGGA = [sentence for sentence in sentences if sentence.find('$GNGGA') > -1 and len(sentence.split(','))>=6][-1]
         codes = GNGGA.split(',')
         latitude = codes[2]
@@ -121,7 +121,6 @@ class L76X(object):
         print(data)
         print('\n')
         add=0
-        self.Status = 0
         for i in range(0, BUFFSIZE-71):
             if(data[add] == 36 and data[add+1] == 71 and (data[add+2] == 78 \
             or data[add+2] == 80) and data[add+3] == 82 and data[add+4] == 77\
