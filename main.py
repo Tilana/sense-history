@@ -1,53 +1,50 @@
-from sense_history.GeodataLoader import GeodataLoader
 from sense_history.Vibrator import Vibrator
 from sense_history.GPS import GPS
-from shapely.geometry import Point
-import pdb
+from absl import flags
+from absl import app
+from run_POIs import run_POIs
+from run_border import run_border
 import logging
-import time
 
-FORMAT = '%(asctime)-15s: %(message)s'
-log_file = './logs/sense_history.log'
-logging.basicConfig(format=FORMAT, level=logging.INFO, filename=log_file, filemode='a')
-#logging.basicConfig(format=FORMAT, level=logging.INFO) 
+ALL_MODULES = ['BERLIN_WALL', 'BERLIN_HISTORIC', 'ZURICH_TREES']
+MODULE_TYPES = {'BERLIN_WALL': 'border',
+                'BERLIN_HISTORIC': 'POIs',
+                'ZURICH_TREES': 'POIs'}
 
-vibrator: Vibrator = Vibrator()
-gps: GPS = GPS()
-vibrator.stop()
+FLAGS = flags.FLAGS
 
-MODULE = 'BERLIN_WALL'
+flags.DEFINE_enum('module', 'BERLIN_WALL', ALL_MODULES, 'The module')
+flags.DEFINE_boolean('debug', False, 'Outputs the logs in the console')
+flags.DEFINE_float('radius', 5.00, 'Radius in which a POI is detected')
 
-west_sector = GeodataLoader(MODULE).data
 
-was_in_west: bool = False
-was_located: bool = False
+def setup_logs(module: str, debug: bool) -> None:
+    FORMAT = '%(asctime)-15s: %(message)s'
+    if debug:
+        logging.basicConfig(format=FORMAT, level=logging.INFO) 
+    else:
+        log_file = './logs/{}.log'.format(module)
+        logging.basicConfig(format=FORMAT, level=logging.INFO, filename=log_file, filemode='a')
 
-logging.info('START POSITIONING')
-i = 0
-while True:
 
-    logging.info('Location step: {}'.format(i))
-    longitude, latitude = gps.get_position()
-    current_position = Point(longitude, latitude)
+def main(argv) -> None:
 
-    if not was_located and gps.islocated():
-        vibrator.run()
-        was_located = True 
+    setup_logs(FLAGS.module, FLAGS.debug)
 
-    is_in_west: bool = west_sector.contains(current_position)
-    logging.info('in west: {}'.format(is_in_west))
+    # Get hardware ready
+    vibrator: Vibrator = Vibrator()
+    gps: GPS = GPS()
+    vibrator.stop()
 
-    if is_in_west != was_in_west:
-        if was_in_west:
-            vibrator.run()
-        else:
-            vibrator.run()
-            time.sleep(0.25)
-            vibrator.run()
+    # Run module dependent on its type
+    module_type = MODULE_TYPES[FLAGS.module]
+    if module_type == 'border':
+        run_border(FLAGS.module, gps, vibrator)
+        pass
+    if module_type == 'POIs':
+        run_POIs(FLAGS.module, gps, vibrator, FLAGS.radius)
 
-    was_in_west = is_in_west
-    i += 1
-    time.sleep(0.5)
 
-gps.stop()
+if __name__=='__main__':
+    app.run(main)
 
