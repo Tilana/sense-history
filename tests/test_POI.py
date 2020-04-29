@@ -1,7 +1,9 @@
 import unittest
 
 from sense_history.POI import POI
+from sense_history.POI import DD_METER 
 from shapely.geometry import Point
+
 
 
 class TestPOI(unittest.TestCase):
@@ -15,10 +17,43 @@ class TestPOI(unittest.TestCase):
         self.assertEqual(poi.location.x, 10.00)
         self.assertEqual(poi.location.y, 42.00)
 
-    def test_distance(self):
+    def test_distance_degrees(self):
         poi = POI('Test POI', longitude=3.00, latitude=0.00)
-        self.assertEqual(poi.distance(Point(0.00, 0.00), False), 3.00)
-        self.assertEqual(poi.distance(Point(0.00, 4.00), False), 5.00)
+        self.assertEqual(poi.distance(Point(0.00, 0.00), unit='degree'), 3.00)
+        self.assertEqual(poi.distance(Point(0.00, 4.00), unit='degree'), 5.00)
+    
+    def test_distance_meter_longitude(self):
+        equator = POI('equator', longitude=0.00, latitude=0.00)
+        # At the equator a degree of longitude is constant
+        self.assertEqual(equator.distance(Point(1.00, 0.00), unit='meter'), DD_METER)
+        self.assertEqual(equator.distance(Point(5.00, 0.00), unit='meter'), DD_METER * 5)
+        # the closer to the poles the smaller a degree of longitude in meters 
+        lat_30 = POI('lat 30', longitude=0.00, latitude=30)
+        lat_50 = POI('lat 50', longitude=0.00, latitude=50)
+        lat_70 = POI('lat 70', longitude=0.00, latitude=70)
+        dist_30 = lat_30.distance(Point(1, 30), unit='meter')
+        dist_50 = lat_50.distance(Point(1, 50), unit='meter')
+        dist_70 = lat_70.distance(Point(1, 70), unit='meter')
+        self.assertTrue(dist_30 > dist_50 and dist_50 > dist_70)
+        # At the poles a degree of longitude is zero 
+        northpole = POI('Northpole', longitude=0.00, latitude=90.0)
+        self.assertAlmostEqual(northpole.distance(Point(1.00, 90.00), unit='meter'), 0)
+        # TODO: Make functions work for southern hemisphere
+        # southpole = POI('Southpole', longitude=0.00, latitude=-90.0)
+        # self.assertAlmostEqual(northpole.distance(Point(1.00, -90.00), unit='meter'), 0)
+
+    def test_distance_meter_latitude(self):
+        # One latitude degree in meter is always constant
+        lon_30 = POI('lon 30', longitude=30.00, latitude=0)
+        lon_50 = POI('lon 50', longitude=50.00, latitude=0)
+        lon_70 = POI('lon 70', longitude=70.00, latitude=0)
+        dist_30 = lon_30.distance(Point(30, 1), unit='meter')
+        dist_50 = lon_50.distance(Point(50, 1), unit='meter')
+        dist_70 = lon_70.distance(Point(70, 1), unit='meter')
+        self.assertAlmostEqual(dist_30, DD_METER)
+        self.assertAlmostEqual(dist_30, dist_50)
+        self.assertAlmostEqual(dist_50, dist_70)
+
 
     def test_intermediaryPoints(self):
         start = POI('Start', longitude=2.00, latitude=0.00)
