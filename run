@@ -1,6 +1,27 @@
 #!/bin/bash
 
+if [ ! -f $(which python3.7) ]; then
+    echo "Python 3.7 is not install. Run 'sudo apt install python3.7-venv python3.7-dev'"
+fi
+
 CMD=$1
+
+if [ $CMD = "install" ]; then
+    python3.7 -m venv venv
+    . ./venv/bin/activate
+    pip install --upgrade pip || echo "Install pip3 with sudo apt install python3.7-pip"
+    pip install --upgrade setuptools wheel
+    pip install --upgrade -r requirements.txt
+    exit 0
+fi 
+
+
+if [ ! -f "venv/bin/activate" ]; then
+	./run install
+fi
+
+. ./venv/bin/activate || exit -1
+
 
 if [ $CMD = "lint" ]; then
     mypy *.py sense_history/*.py --ignore-missing-imports
@@ -10,7 +31,7 @@ elif [ $CMD = "test" ]; then
     ./run lint
 
 elif [ $CMD = "start" ]; then
-    sudo python3 main.py "$@"
+    sudo python3.7 main.py
 else
     "$CMD" "$@"
 fi
