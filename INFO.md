@@ -147,9 +147,47 @@ The  line of longitude is read as 2.17403 degrees east. The coordinate for  the 
 
 
 
+
 #### Conversion
 
 The L76X returns the location in the DMM format. To compare the location with the data modules we convert it into the DD format. The following equation is used:
+
+
+
+#### Distance of Points on a Sphere
+
+The equator is divided into 360 degrees of longitude. With a radius of about 6378km (and a circumference of 40 000 km), one degree of longitude represents about 111.32 km.
+
+$$
+r = 6378 km \\
+arc_{Lon} = \frac{2 * \pi * r}{360 °} \approx 111.32 km / °
+$$
+
+
+As ones moves away from the equator towards a pole, however, one degree of longitude is multiplied by the cosine of the latitude, decreasing the distance, approaching zero at the pole [copied from wikipedia on decimal degreees].
+
+Precision at equator:
+
+1.0 = 111.32 km
+
+0.01 = 1.1132 km
+
+0.0001 = 11.132 m
+
+0.00001 = 1.1132 m
+
+
+To compute the distance of two points on a spherical surface like the earth the Haversin formula is used. It requires the latitude and longitude of both points, as well as the radius of the earth.
+
+Limitations of the precision (for distances less than 0.5 meters) when computing haversine distance: https://gis.stackexchange.com/questions/4906/why-is-law-of-cosines-more-preferable-than-haversine-when-calculating-distance-b 
+
+Assuming short distances Pythagoras can provide a reasonable approximation. Comparison of both distance calculations: https://www.htw-mechlab.de/index.php/converting-latlon-to-meters-wgs84/
+
+
+
+
+#### Conversion to Meters
+
 
 
 
