@@ -11,11 +11,10 @@ class TestGeodataLoader(unittest.TestCase):
         data = {'geometry': {'type': 'Point', 'coordinates': [42.00, 12.00]},
                 'properties': {'name': 'POI', 'year': '1900'}}
 
-        LNG_keys = ['geometry', 'coordinates', '0']
-        name_keys = ['properties', 'name']
-        self.assertEqual(self.loader.get_from_dictionary(data, name_keys), 'POI')
+        self.assertEqual(self.loader.get_from_dictionary(data, ['properties', 'name']), 'POI')
         self.assertEqual(self.loader.get_from_dictionary(data, ['geometry']), {'type': 'Point', 'coordinates': [42.00, 12.00]})
-        self.assertEqual(self.loader.get_from_dictionary(data, ['geometry', 'coordinates']), [42.00, 12.00])
+
+        LNG_keys = ['geometry', 'coordinates', 0]
         self.assertEqual(self.loader.get_from_dictionary(data, LNG_keys), 42.00)
 
         
