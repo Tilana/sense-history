@@ -54,6 +54,14 @@ class TestPOI(unittest.TestCase):
         self.assertAlmostEqual(dist_30, dist_50)
         self.assertAlmostEqual(dist_50, dist_70)
 
+    def test_distance_real_world_examples(self):
+        fernsehturm = POI('fernsehturm', longitude=13.409392, latitude=52.520792)
+        neptunbrunnen = POI('neptunbrunnen', longitude=13.407365, latitude=52.519759)
+        distance = fernsehturm.distance(Point(neptunbrunnen.location.x, neptunbrunnen.location.y), unit='meter')
+        self.assertAlmostEqual(distance, 180, -1)
+        dist_stuttgart_hbf = fernsehturm.distance(Point(9.182922, 48.783390))
+        self.assertAlmostEqual(dist_stuttgart_hbf, 511170, -5)
+
 
     def test_intermediaryPoints(self):
         start = POI('Start', longitude=2.00, latitude=0.00)
