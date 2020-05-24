@@ -1,0 +1,112 @@
+{
+  "type": "FeatureCollection",
+  "generator": "overpass-ide",
+  "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.",
+  "timestamp": "2019-10-12T10:28:02Z",
+  "features": [
+   {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/262525336",
+        "historic": "memorial",
+        "image": "http://commons.wikimedia.org/wiki/File:Bebelplatz_mit_Mahnmal_B%C3%BCcherverbrennung_Aug_2009.jpg",
+        "name": "Denkmal zur Erinnerung an die Bücherverbrennung",
+        "name:en": "Memorial for the Nazi book burnings",
+        "name:lt": "Memorialas už Nacių knygų deginimus",
+        "name:ru": "Пямятник сожжению книг",
+        "wheelchair": "yes",
+        "wikidata": "Q18191705",
+        "wikipedia": "de:Denkmal zur Erinnerung an die Bücherverbrennung"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3939369,
+          52.5165158
+        ]
+      },
+      "id": "node/262525336"
+    },
+        {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2995777054",
+        "addr:city": "Berlin",
+        "addr:country": "DE",
+        "addr:housenumber": "16",
+        "addr:postcode": "10119",
+        "addr:street": "Griebenowstraße",
+        "addr:suburb": "Prenzlauer Berg",
+        "artist_name": "Karl Biedermann",
+        "artwork_type": "statue",
+        "contact:website": "http://www.zionskirche-berlin.de/zionskirche/geschichte/dietrich-bonhoeffer/",
+        "historic": "memorial",
+        "name": "Dietrich-Bonhoeffer-Mahnmal",
+        "tourism": "artwork",
+        "wheelchair": "yes"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.4036342,
+          52.534515
+        ]
+      },
+      "id": "node/2995777054"
+    },
+        {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6215589881",
+        "historic": "memorial",
+        "image": "https://commons.wikimedia.org/wiki/File:Berlin_Gedenktafel_Alexander_von_Humboldt_Oranienburger_Str_67_2009_09_20.JPG",
+        "memorial": "plaque",
+        "name": "Alexander von Humboldt"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3921404,
+          52.5250132
+        ]
+      },
+      "id": "node/6215589881"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2507921967",
+        "historic": "memorial",
+        "image": "https://commons.wikimedia.org/wiki/File:Gedenktafel_Opitzstr_6_%28Stegl%29_Hannah_Arendt.JPG",
+        "memorial": "plaque",
+        "name": "Hannah Arendt"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3108118,
+          52.464266
+        ]
+      },
+      "id": "node/2507921967"
+    },
+        {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4193482420",
+        "historic": "memorial",
+        "image": "https://de.wikipedia.org/wiki/Datei:2007-01-20_Gedenktafel_Zuse_Z3.jpg",
+        "memorial": "plaque",
+        "name": "Zuse Z3"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.3855358,
+          52.4891623
+        ]
+      },
+      "id": "node/4193482420"
+    }
+   ]
+}

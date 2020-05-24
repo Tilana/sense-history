@@ -28,6 +28,8 @@ class GeodataLoader(object):
             self.load_geojson()
         if MODULE == 'ZURICH_TREES':
             self.load_geojson()
+        if MODULE == 'TEST':
+            self.load_geojson()
 
     def load_geojson(self) -> None:
         data = self.load_json(self.cfg['path'])[self.cfg['key']]
