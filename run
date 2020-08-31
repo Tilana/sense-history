@@ -9,9 +9,9 @@ CMD=$1
 if [ $CMD = "install" ]; then
     python3.7 -m venv venv
     . ./venv/bin/activate
-    pip install --upgrade pip || echo "Install pip3 with sudo apt install python3.7-pip"
-    pip install --upgrade setuptools wheel
-    pip install --upgrade -r requirements.txt
+    python3.7 -m pip install --upgrade pip || echo "Install pip3 with sudo apt install python3.7-pip"
+    python3.7 -m pip install --upgrade setuptools wheel
+    python3.7 -m pip install --upgrade -r requirements.txt
     exit 0
 fi 
 
@@ -31,7 +31,7 @@ elif [ $CMD = "test" ]; then
     ./run lint
 
 elif [ $CMD = "start" ]; then
-    sudo python3.7 main.py
+    python3.7 main.py
 else
     "$CMD" "$@"
 fi
