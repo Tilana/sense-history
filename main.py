@@ -40,7 +40,6 @@ def main(argv) -> None:
     module_type = MODULE_TYPES[FLAGS.module]
     if module_type == 'border':
         run_border(FLAGS.module, gps, vibrator)
-        pass
     if module_type == 'POIs':
         run_POIs(FLAGS.module, gps, vibrator, FLAGS.radius)
 
